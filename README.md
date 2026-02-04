@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pole Vault Flights
 
-## Getting Started
+Minimal MVP for searching pole-approved flight offers and listing approved airlines.
 
-First, run the development server:
+## Highlights
+
+- Search Amadeus flight offers filtered to the internal pole-approved airline list.
+- Passenger counts for adults, children, and infants with validation.
+- Mock results when Amadeus credentials are missing so the UI still works.
+- `/airlines` page that surfaces the current approved carrier list.
+- Airport combobox seeded with major IATA airports.
+
+## Local development
+
+1. Install dependencies
+
+```bash
+npm install
+```
+
+2. Configure environment variables (optional for live Amadeus data)
+
+```bash
+cp .env.local.example .env.local
+```
+
+3. Run the dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+If the Amadeus credentials are missing, the app returns mock data labeled
+"Mock data (missing API keys)" so the UI still works.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment variables
 
-## Learn More
+Set these in `.env.local` (local) or in Vercel Project Settings > Environment Variables:
 
-To learn more about Next.js, take a look at the following resources:
+- `AMADEUS_CLIENT_ID`
+- `AMADEUS_CLIENT_SECRET`
+- `AMADEUS_HOST` (optional, defaults to `https://test.api.amadeus.com`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API route
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`GET /api/flights?origin=SFO&destination=MNL&departDate=2026-02-10&returnDate=2026-02-18&adults=1&children=0&infants=0`
 
-## Deploy on Vercel
+Returns a normalized list of recommended, pole-approved flights.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Optional query params:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `returnDate` (YYYY-MM-DD)
+- `adults` (integer, defaults to 1)
+- `children` (integer, defaults to 0)
+- `infants` (integer, defaults to 0)
+
+## Updating data
+
+- Approved airline list lives in `src/lib/poleAirlines.ts`.
+- Airport combobox options live in `src/lib/airports.ts`.
+
+## Deploy to Vercel
+
+1. Push this repo to GitHub.
+2. Import the repo in Vercel.
+3. Add the environment variables above in Vercel.
+4. Deploy. No code changes required.
