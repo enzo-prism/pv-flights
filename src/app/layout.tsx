@@ -6,6 +6,11 @@ import TopNav from "@/app/components/TopNav";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
+const siteUrl = "https://pv-flights.vercel.app";
+const siteTitle = "Pole Vault Flights";
+const siteDescription =
+  "Search pole-approved flights and airlines for pole vault gear.";
+
 const sfProText = localFont({
   variable: "--font-sf-pro",
   display: "swap",
@@ -100,8 +105,21 @@ const sfProText = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Pole Vault Flights",
-  description: "Search pole-approved flights and airlines for pole vault gear.",
+  metadataBase: new URL(siteUrl),
+  title: siteTitle,
+  description: siteDescription,
+  openGraph: {
+    title: siteTitle,
+    description: siteDescription,
+    url: siteUrl,
+    siteName: siteTitle,
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: siteTitle,
+    description: siteDescription,
+  },
 };
 
 export default function RootLayout({

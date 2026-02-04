@@ -2,6 +2,11 @@
 
 Minimal MVP for searching pole-approved flight offers and listing approved airlines.
 
+## Live deployment
+
+- Production: https://pv-flights.vercel.app
+- Vercel deployment URL: https://pv-flights-9hp6a86e6-enzo-design-prisms-projects.vercel.app
+
 ## Highlights
 
 - Search Amadeus flight offers filtered to the internal pole-approved airline list.
@@ -67,3 +72,5 @@ Optional query params:
 2. Import the repo in Vercel.
 3. Add the environment variables above in Vercel.
 4. Deploy. No code changes required.
+
+To update the production deployment, push to the `main` branch.
