@@ -131,11 +131,20 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${sfProText.variable} font-sans`}>
         <div className="min-h-screen bg-background text-foreground">
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-foreground focus:shadow-lg"
+          >
+            Skip to content
+          </a>
           <header className="border-b bg-background">
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-6 md:flex-row md:items-center md:justify-between">
               <div className="flex items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl border bg-muted">
-                  <Plane className="h-5 w-5 text-muted-foreground" />
+                  <Plane
+                    aria-hidden="true"
+                    className="h-5 w-5 text-muted-foreground"
+                  />
                 </div>
                 <div className="space-y-1">
                   <div className="flex flex-wrap items-center gap-2">
@@ -154,7 +163,10 @@ export default function RootLayout({
               <TopNav />
             </div>
           </header>
-          <main className="mx-auto w-full max-w-6xl px-6 py-10">
+          <main
+            id="main-content"
+            className="mx-auto w-full max-w-6xl px-6 py-10"
+          >
             {children}
           </main>
           <Separator />

@@ -26,6 +26,7 @@ type AirportComboboxProps = {
   value: string;
   onValueChange: (value: string) => void;
   options: AirportOption[];
+  errorMessage?: string | null;
 };
 
 export default function AirportCombobox({
@@ -35,6 +36,7 @@ export default function AirportCombobox({
   value,
   onValueChange,
   options,
+  errorMessage,
 }: AirportComboboxProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -47,6 +49,7 @@ export default function AirportCombobox({
   );
   const canUseCustom =
     iataPattern.test(normalizedQuery) && !optionCodes.has(normalizedQuery);
+  const errorId = errorMessage ? `${id}-error` : undefined;
 
   return (
     <div className="space-y-2">
@@ -55,15 +58,24 @@ export default function AirportCombobox({
         <PopoverTrigger asChild>
           <Button
             id={id}
+            type="button"
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full justify-between text-left font-normal"
+            aria-invalid={Boolean(errorMessage)}
+            aria-describedby={errorId}
+            className="h-11 w-full justify-between text-left font-normal sm:h-9"
           >
-            <span className="truncate">
+            <span
+              className="min-w-0 truncate"
+              title={selected ? formatAirportLabel(selected) : placeholder}
+            >
               {selected ? formatAirportLabel(selected) : placeholder}
             </span>
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 text-muted-foreground" />
+            <ChevronsUpDown
+              aria-hidden="true"
+              className="ml-2 h-4 w-4 shrink-0 text-muted-foreground"
+            />
           </Button>
         </PopoverTrigger>
         <PopoverContent
@@ -72,7 +84,12 @@ export default function AirportCombobox({
         >
           <Command>
             <CommandInput
-              placeholder="Search airports..."
+              aria-label={`${label} airport search`}
+              autoComplete="off"
+              enterKeyHint="search"
+              name={`${id}-search`}
+              placeholder="Search airports (e.g., SFO)…"
+              spellCheck={false}
               value={query}
               onValueChange={setQuery}
             />
@@ -87,7 +104,7 @@ export default function AirportCombobox({
                       setOpen(false);
                     }}
                   >
-                    Use &quot;{normalizedQuery}&quot;
+                    Use “{normalizedQuery}”
                   </CommandItem>
                 ) : null}
                 {options.map((option) => (
@@ -100,6 +117,7 @@ export default function AirportCombobox({
                     }}
                   >
                     <Check
+                      aria-hidden="true"
                       className={cn(
                         "mr-2 h-4 w-4",
                         option.iata === value ? "opacity-100" : "opacity-0",
@@ -120,6 +138,16 @@ export default function AirportCombobox({
           </Command>
         </PopoverContent>
       </Popover>
+      {errorMessage ? (
+        <p
+          id={errorId}
+          role="status"
+          aria-live="polite"
+          className="text-xs text-destructive"
+        >
+          {errorMessage}
+        </p>
+      ) : null}
     </div>
   );
 }

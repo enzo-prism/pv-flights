@@ -10,7 +10,7 @@ const tabs = [
   {
     value: "airlines",
     href: "/airlines",
-    label: "Pole-approved airlines",
+    label: "Pole-Approved Airlines",
     icon: ShieldCheck,
   },
 ];
@@ -27,8 +27,15 @@ export default function TopNav() {
       >
         {tabs.map((tab) => (
           <TabsTrigger key={tab.value} value={tab.value} asChild>
-            <Link href={tab.href} className="flex items-center gap-2">
-              <tab.icon className="h-4 w-4 text-muted-foreground" />
+            <Link
+              href={tab.href}
+              aria-current={activeValue === tab.value ? "page" : undefined}
+              className="flex items-center gap-2"
+            >
+              <tab.icon
+                aria-hidden="true"
+                className="h-4 w-4 text-muted-foreground"
+              />
               <span>{tab.label}</span>
             </Link>
           </TabsTrigger>

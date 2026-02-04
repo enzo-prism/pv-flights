@@ -12,16 +12,16 @@ import { poleApprovedAirlines } from "@/lib/poleAirlines";
 
 export default function AirlinesPage() {
   return (
-    <section className="space-y-8 animate-in fade-in-0">
+    <section className="space-y-8 animate-in fade-in-0 motion-reduce:animate-none">
       <div className="space-y-3">
         <Badge variant="outline" className="w-fit text-muted-foreground">
-          <ShieldCheck className="h-3.5 w-3.5" />
+          <ShieldCheck aria-hidden="true" className="h-3.5 w-3.5" />
           Internal approval list
         </Badge>
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Pole-approved airlines
+        <h1 className="text-3xl font-semibold tracking-tight text-balance">
+          Pole-Approved Airlines
         </h1>
-        <p className="max-w-2xl text-base text-muted-foreground">
+        <p className="max-w-2xl text-base text-muted-foreground text-pretty">
           Airlines confirmed to accept pole vault poles. The MVP currently
           includes a single verified carrier.
         </p>
@@ -33,15 +33,17 @@ export default function AirlinesPage() {
         {poleApprovedAirlines.map((airline) => (
           <Card key={airline.iataCode} className="shadow-sm">
             <CardHeader className="space-y-3">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <CardTitle className="text-base">{airline.name}</CardTitle>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="min-w-0">
+                  <CardTitle className="text-base text-pretty">
+                    {airline.name}
+                  </CardTitle>
                   <CardDescription className="text-xs uppercase tracking-[0.3em]">
                     {airline.iataCode}
                   </CardDescription>
                 </div>
                 <Badge variant="outline" className="text-muted-foreground">
-                  <BadgeCheck className="h-3.5 w-3.5" />
+                  <BadgeCheck aria-hidden="true" className="h-3.5 w-3.5" />
                   Confirmed (internal research)
                 </Badge>
               </div>

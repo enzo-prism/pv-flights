@@ -31,7 +31,7 @@ function Command({
 
 function CommandDialog({
   title = "Command Palette",
-  description = "Search for a command to run...",
+  description = "Search for a command to run…",
   children,
   className,
   showCloseButton = true,
@@ -67,13 +67,13 @@ function CommandInput({
   return (
     <div
       data-slot="command-input-wrapper"
-      className="flex h-9 items-center gap-2 border-b px-3"
+      className="flex h-11 items-center gap-2 border-b px-3 sm:h-9"
     >
-      <SearchIcon className="size-4 shrink-0 opacity-50" />
+      <SearchIcon aria-hidden="true" className="size-4 shrink-0 opacity-50" />
       <CommandPrimitive.Input
         data-slot="command-input"
         className={cn(
-          "placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
+          "placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50 sm:h-9",
           className
         )}
         {...props}
@@ -84,15 +84,17 @@ function CommandInput({
 
 function CommandList({
   className,
+  style,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.List>) {
   return (
     <CommandPrimitive.List
       data-slot="command-list"
       className={cn(
-        "max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto",
+        "max-h-[60vh] scroll-py-1 overflow-x-hidden overflow-y-auto sm:max-h-[300px]",
         className
       )}
+      style={{ contentVisibility: "auto", ...style }}
       {...props}
     />
   )

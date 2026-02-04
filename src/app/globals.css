@@ -122,4 +122,10 @@
   body {
     @apply bg-background text-foreground font-sans;
   }
+  a,
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
 }
